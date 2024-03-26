@@ -16,13 +16,13 @@ class Xtask:
         return (self.next < time.monotonic())
 
 
-
+ 
 # example code
 cntr = 0
 
 def task_a():
     global cntr
-    # print("TaskA")
+    #print("*")
     cntr = cntr + 1
 
 def task_b():

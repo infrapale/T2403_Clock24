@@ -1,45 +1,69 @@
 import time
+import xtask
+from xtask import Xtask
+#import clock24
+from clock24 import clock
+import color as color
+import rtc_pcf8563
+import busio
+import digitalio
+import pico_rtc_u2u_sd_gpio as gpio
+from pico_rtc_u2u_sd_gpio import i2c0
+import time
+from adafruit_pcf8563.pcf8563 import PCF8563
+from rtc_pcf8563 import rtc_pcf8563
+from rtc_pcf8563 import rtc
+# Storage libraries
+import adafruit_sdcard
+import storage
+import data
+from data import date_time
+import api
 
+# clock = clock24.Clock24()
 
-class Xtask: 
-    def __init__(self, label, interval, cb ):       
-        self.label =  label
-        self.interval = interval
-        self.cb = cb
-        self.next = time.monotonic() + self.interval
+# Power on I2C
+i2c_en = digitalio.DigitalInOut(gpio.EN_I2C_PIN)
+i2c_en.direction = digitalio.Direction.OUTPUT
+i2c_en.value = 1
+
+uart1 = busio.UART(gpio.TX1_PIN, gpio.RX1_PIN, baudrate=9600)
+spi = busio.SPI(gpio.SD_CLK_PIN, gpio.SD_MOSI_PIN, gpio.SD_MISO_PIN)
+cs = digitalio.DigitalInOut(gpio.SD_CS_PIN)
+sdcard = adafruit_sdcard.SDCard(spi, cs)
+
+vfs = storage.VfsFat(sdcard)
+# storage.mount(vfs, "/sd")
+# rtc = rtc_pcf8563(i2c0)
+
+data.mode['index'] = data.MODE_UNDEFINED
+
+def task_clock24():
+    clock.show_time(rtc.date_time.tm_hour, rtc.date_time.tm_min, color.color_arr[color.COLOR_INDX_YELLOW])
+
+def task_rtc():
+    rtc.read_time()
+    #print(rtc.date_time.tm_hour, rtc.date_time.tm_min)  
     
-    def run(self):
-        self.next = time.monotonic() + self.interval
-        self.cb()
+def task_serial():
+    api.read_serial_task()
+    
+    
+    
 
-    def is_ready(self):
-        return (self.next < time.monotonic())
+# define tasks
+task_clock_handle = Xtask("Clock24", 0.1, task_clock24)
+task_rtc_handle = Xtask("RTC", 5.0, task_rtc)
+task_serial_handle = Xtask("Serial", 0.1, task_serial)
 
+tasks = [task_clock_handle,task_rtc_handle, task_serial_handle]
+xtask.set_tasks(tasks)
 
- 
-# example code
-cntr = 0
+clock.set_time(6,30)
+clock.set_mode(data.mode['index'])
+print('code:',color.color_arr)
 
-def task_a():
-    global cntr
-    #print("*")
-    cntr = cntr + 1
-
-def task_b():
-    global cntr
-    # print("TaskB")
-    print(cntr)
-
-task_a = Xtask("taskA", 0.0001, task_a)
-task_b = Xtask("taskB", 10.0, task_b)
-
-tasks = [task_a,task_b]
-
-while 1:
-    for task in tasks:
-        if task.is_ready():
-            task.run()
-
-
-        
+while True:
+    xtask.run_tasks()
+       
         

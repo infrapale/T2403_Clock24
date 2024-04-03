@@ -160,6 +160,29 @@ class Clock24:
             self.spinner1.wait = 0
             self.spinner1.active = True
 
+        elif self.mode == data.MODE_WARNING:
+            self.spinner0.color_indx = color.COLOR_INDX_RED
+            self.spinner0.pos = 6
+            self.spinner0.wait = 0
+            self.spinner0.active = True
+
+            self.spinner1.color_indx = color.COLOR_INDX_RED
+            self.spinner1.pos = 6
+            self.spinner1.wait = 2
+            self.spinner1.active = True
+
+            self.spinner2.color_indx = color.COLOR_INDX_RED
+            self.spinner2.pos = 6
+            self.spinner2.wait = 0
+            self.spinner2.direction = -1
+            self.spinner2.active = True
+
+            self.spinner3.color_indx = color.COLOR_INDX_RED
+            self.spinner3.pos = 6
+            self.spinner3.wait = 2
+            self.spinner3.direction = -1
+            self.spinner3.active = True
+
 clock = Clock24()
             
 '''        

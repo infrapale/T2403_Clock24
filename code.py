@@ -1,4 +1,16 @@
+import gc
+gc.collect()
+start_mem = gc.mem_free()
+print( "Point 0 Available memory: {} bytes".format(start_mem) ) 
+
 import time
+
+import pico_rtc_u2u_sd_gpio as gpio
+
+#i2c_en = digitalio.DigitalInOut(gpio.EN_I2C_PIN)
+#i2c_en.direction = digitalio.Direction.OUTPUT
+#i2c_en.value = 1
+
 import xtask
 from xtask import Xtask
 #import clock24
@@ -7,9 +19,9 @@ import color as color
 import rtc_pcf8563
 import busio
 import digitalio
-import pico_rtc_u2u_sd_gpio as gpio
-from pico_rtc_u2u_sd_gpio import i2c0
 import time
+
+from pico_rtc_u2u_sd_gpio import i2c0
 from adafruit_pcf8563.pcf8563 import PCF8563
 from rtc_pcf8563 import rtc_pcf8563
 from rtc_pcf8563 import rtc
@@ -19,13 +31,13 @@ import storage
 import data
 from data import date_time
 import api
+import edog
 
-# clock = clock24.Clock24()
+print()
+gc.collect()
+start_mem = gc.mem_free()
+print( "Point 1 Available memory: {} bytes".format(start_mem) ) 
 
-# Power on I2C
-i2c_en = digitalio.DigitalInOut(gpio.EN_I2C_PIN)
-i2c_en.direction = digitalio.Direction.OUTPUT
-i2c_en.value = 1
 
 uart1 = busio.UART(gpio.TX1_PIN, gpio.RX1_PIN, baudrate=9600)
 spi = busio.SPI(gpio.SD_CLK_PIN, gpio.SD_MOSI_PIN, gpio.SD_MISO_PIN)
@@ -62,6 +74,12 @@ xtask.set_tasks(tasks)
 clock.set_time(6,30)
 clock.set_mode(data.mode['index'])
 print('code:',color.color_arr)
+
+gc.collect()
+end_mem = gc.mem_free()
+
+print( "Point 2 Available memory: {} bytes".format(end_mem) )
+print( "Code section 1-2 used {} bytes".format(start_mem - end_mem) )
 
 while True:
     xtask.run_tasks()

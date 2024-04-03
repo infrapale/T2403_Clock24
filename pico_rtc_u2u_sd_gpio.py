@@ -3,6 +3,7 @@ Pico U2U RTC SD  GPIO
 '''
 import board
 import busio
+import digitalio
 
 TX0_PIN      = board.GP0
 RX0_PIN      = board.GP1
@@ -22,6 +23,12 @@ SD_MISO_PIN  = board.GP16
 RTC_CLK_PIN  = board.GP21
 RGB1_PIN     = board.GP20
 RGB2_PIN     = board.GP22
+
+
+# Power on I2C
+i2c_en = digitalio.DigitalInOut(EN_I2C_PIN)
+i2c_en.direction = digitalio.Direction.OUTPUT
+i2c_en.value = 1
 
 i2c0 = busio.I2C(I2C0_SCL_PIN, I2C0_SDA_PIN, frequency=100000)
 i2c1 = busio.I2C(I2C1_SCL_PIN, I2C1_SDA_PIN, frequency=1000000)

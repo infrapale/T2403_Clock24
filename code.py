@@ -39,7 +39,7 @@ start_mem = gc.mem_free()
 print( "Point 1 Available memory: {} bytes".format(start_mem) ) 
 
 
-uart1 = busio.UART(gpio.TX1_PIN, gpio.RX1_PIN, baudrate=9600)
+# uart1 = busio.UART(gpio.TX1_PIN, gpio.RX1_PIN, baudrate=9600)
 spi = busio.SPI(gpio.SD_CLK_PIN, gpio.SD_MOSI_PIN, gpio.SD_MISO_PIN)
 cs = digitalio.DigitalInOut(gpio.SD_CS_PIN)
 sdcard = adafruit_sdcard.SDCard(spi, cs)
@@ -48,11 +48,12 @@ vfs = storage.VfsFat(sdcard)
 # storage.mount(vfs, "/sd")
 # rtc = rtc_pcf8563(i2c0)
 
-data.mode['index'] = data.MODE_UNDEFINED
+data.mode['index'] = data.MODE_START
 
 def task_clock24():
     clock.show_time(rtc.date_time.tm_hour, rtc.date_time.tm_min, color.color_arr[color.COLOR_INDX_YELLOW])
-
+    # print(rtc.date_time.tm_hour, rtc.date_time.tm_min);
+    
 def task_rtc():
     rtc.read_time()
     #print(rtc.date_time.tm_hour, rtc.date_time.tm_min)  
@@ -66,7 +67,7 @@ def task_serial():
 # define tasks
 task_clock_handle = Xtask("Clock24", 0.1, task_clock24)
 task_rtc_handle = Xtask("RTC", 5.0, task_rtc)
-task_serial_handle = Xtask("Serial", 0.1, task_serial)
+task_serial_handle = Xtask("Serial", 1.0, task_serial)
 
 tasks = [task_clock_handle,task_rtc_handle, task_serial_handle]
 xtask.set_tasks(tasks)

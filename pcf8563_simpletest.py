@@ -11,14 +11,13 @@
 import time
 import board
 import busio
+from pico_rtc_u2u_sd_gpio import i2c0
 
 from adafruit_pcf8563.pcf8563 import PCF8563
 
-# Change to the appropriate I2C clock & data pins here!
-i2c_bus = busio.I2C(board.SCL, board.SDA)
 
 # Create the RTC instance:
-rtc = PCF8563(i2c_bus)
+rtc = PCF8563(i2c0)
 
 # Lookup table for names of days (nicer printing).
 days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -27,7 +26,7 @@ days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sun
 # pylint: disable-msg=using-constant-test
 if False:  # change to True if you want to set the time!
     #                     year, mon, date, hour, min, sec, wday, yday, isdst
-    t = time.struct_time((2017, 10, 29, 10, 31, 0, 0, -1, -1))
+    t = time.struct_time((2024, 4, 10, 17, 12, 0, 0, -1, -1))
     # you must set year, mon, date, hour, min, sec and weekday
     # yearday is not supported, isdst can be set but we don't do anything with it at this time
     print("Setting time to:", t)  # uncomment for debugging

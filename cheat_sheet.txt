@@ -13,4 +13,23 @@ Cheat Sheet
 <C1MS:2>
 <C1MS:3>
 <C1MS:4>
+<C1MS:5>
 <C1MG>
+
+
+
+#import gc
+#gc.collect()
+#start_mem = gc.mem_free()
+#print( "Point 0 Available memory: {} bytes".format(start_mem) ) 
+
+#gc.collect()
+#start_mem = gc.mem_free()
+#print( "Point 1 Available memory: {} bytes".format(start_mem) ) 
+
+#gc.collect()
+#end_mem = gc.mem_free()
+
+#print( "Point 2 Available memory: {} bytes".format(end_mem) )
+#print( "Code section 1-2 used {} bytes".format(start_mem - end_mem) )
+

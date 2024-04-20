@@ -82,8 +82,8 @@ def check_cmd(rec_msg):
             print("Match: ", rec_msg)
             break
             
-
-ucom = UartCom(gpio.TX0_PIN, gpio.RX0_PIN, 9600)
+'''
+ucom = UartCom(gpio.TX1_PIN, gpio.RX1_PIN, 9600)
 while 1:
     msg = ucom.read_msg()
     if len(msg) > 0:
@@ -98,7 +98,7 @@ while 1:
             print("Frame error: ",ucom.msg)
         reply_date_time['data']='2023;09;21;19;50'
         ucom.send_dict_msg(reply_date_time)
-        
+'''        
 
 
 

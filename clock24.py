@@ -106,140 +106,141 @@ class Clock24:
             
         pixels.show()
     def set_mode(self, new_mode):
-        self.mode = new_mode
+        if new_mode != self.mode:
+            self.mode = new_mode
 
-        for spin in self.spinners:
-            spin.active = False
-            spin.direction = 1
-            spin.wait = 0
-            spin.pos = 0
+            for spin in self.spinners:
+                spin.active = False
+                spin.direction = 1
+                spin.wait = 0
+                spin.pos = 0
 
-        if self.mode == data.MODE_START:
-            self.spinner0.color_indx = color.COLOR_INDX_RED
-            self.spinner0.pos = 6
-            self.spinner0.active = True
+            if self.mode == data.MODE_START:
+                self.spinner0.color_indx = color.COLOR_INDX_RED
+                self.spinner0.pos = 6
+                self.spinner0.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_GREEN
-            self.spinner1.pos = 4
-            self.spinner1.active = True
+                self.spinner1.color_indx = color.COLOR_INDX_GREEN
+                self.spinner1.pos = 4
+                self.spinner1.active = True
+                
+            elif self.mode == data.MODE_AT_HOME:
+                self.spinner0.color_indx = color.COLOR_INDX_GREEN
+                self.spinner0.pos = 6
+                self.spinner0.active = True
+
+                self.spinner1.color_indx = color.COLOR_INDX_GREEN
+                self.spinner1.pos = 5
+                self.spinner1.active = True
             
-        elif self.mode == data.MODE_AT_HOME:
-            self.spinner0.color_indx = color.COLOR_INDX_GREEN
-            self.spinner0.pos = 6
-            self.spinner0.active = True
+            elif self.mode == data.MODE_COUNT_DOWN:
+                self.spinner0.color_indx = color.COLOR_INDX_GREEN
+                self.spinner0.pos = 6
+                self.spinner0.wait = 0
+                self.spinner0.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_GREEN
-            self.spinner1.pos = 5
-            self.spinner1.active = True
-        
-        elif self.mode == data.MODE_COUNT_DOWN:
-            self.spinner0.color_indx = color.COLOR_INDX_GREEN
-            self.spinner0.pos = 6
-            self.spinner0.wait = 0
-            self.spinner0.active = True
+                self.spinner1.color_indx = color.COLOR_INDX_RED
+                self.spinner1.pos = 7
+                self.spinner1.direction = 1
+                self.spinner1.wait = 0
+                self.spinner1.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_RED
-            self.spinner1.pos = 7
-            self.spinner1.direction = 1
-            self.spinner1.wait = 0
-            self.spinner1.active = True
+                self.spinner2.color_indx = color.COLOR_INDX_BLUE
+                self.spinner2.pos = 8
+                self.spinner2.wait = 0
+                self.spinner2.active = True
 
-            self.spinner2.color_indx = color.COLOR_INDX_BLUE
-            self.spinner2.pos = 8
-            self.spinner2.wait = 0
-            self.spinner2.active = True
+                self.spinner3.color_indx = color.COLOR_INDX_WHITE
+                self.spinner3.pos = 9
+                self.spinner3.wait = 0
+                self.spinner3.direction = 1
+                self.spinner3.active = True
+                
+            elif self.mode == data.MODE_AWAY:
+                self.spinner0.color_indx = color.COLOR_INDX_RED
+                self.spinner0.pos = 6
+                self.spinner0.wait = 0
+                self.spinner0.active = True
 
-            self.spinner3.color_indx = color.COLOR_INDX_WHITE
-            self.spinner3.pos = 9
-            self.spinner3.wait = 0
-            self.spinner3.direction = 1
-            self.spinner3.active = True
-            
-        elif self.mode == data.MODE_AWAY:
-            self.spinner0.color_indx = color.COLOR_INDX_RED
-            self.spinner0.pos = 6
-            self.spinner0.wait = 0
-            self.spinner0.active = True
+                self.spinner1.color_indx = color.COLOR_INDX_RED
+                self.spinner1.pos = 18
+                self.spinner1.wait = 0
+                self.spinner1.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_RED
-            self.spinner1.pos = 18
-            self.spinner1.wait = 0
-            self.spinner1.active = True
+                self.spinner2.color_indx = color.COLOR_INDX_RED
+                self.spinner2.pos = 6
+                self.spinner2.wait = 0
+                self.spinner2.direction = -1
+                self.spinner2.active = True
 
-            self.spinner2.color_indx = color.COLOR_INDX_RED
-            self.spinner2.pos = 6
-            self.spinner2.wait = 0
-            self.spinner2.direction = -1
-            self.spinner2.active = True
+                self.spinner3.color_indx = color.COLOR_INDX_RED
+                self.spinner3.pos = 18
+                self.spinner3.wait = 0
+                self.spinner3.direction = -1
+                self.spinner3.active = True
 
-            self.spinner3.color_indx = color.COLOR_INDX_RED
-            self.spinner3.pos = 18
-            self.spinner3.wait = 0
-            self.spinner3.direction = -1
-            self.spinner3.active = True
+            elif self.mode == data.MODE_WARNING:
+                self.spinner0.color_indx = color.COLOR_INDX_RED
+                self.spinner0.pos = 6
+                self.spinner0.wait = 0
+                self.spinner0.active = True
 
-        elif self.mode == data.MODE_WARNING:
-            self.spinner0.color_indx = color.COLOR_INDX_RED
-            self.spinner0.pos = 6
-            self.spinner0.wait = 0
-            self.spinner0.active = True
+                self.spinner1.color_indx = color.COLOR_INDX_RED
+                self.spinner1.pos = 12
+                self.spinner1.wait = 0
+                self.spinner1.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_RED
-            self.spinner1.pos = 12
-            self.spinner1.wait = 0
-            self.spinner1.active = True
+                self.spinner2.color_indx = color.COLOR_INDX_RED
+                self.spinner2.pos = 18
+                self.spinner2.wait = 0
+                self.spinner2.direction = 1
+                self.spinner2.active = True
 
-            self.spinner2.color_indx = color.COLOR_INDX_RED
-            self.spinner2.pos = 18
-            self.spinner2.wait = 0
-            self.spinner2.direction = 1
-            self.spinner2.active = True
+                self.spinner3.color_indx = color.COLOR_INDX_RED
+                self.spinner3.pos = 0
+                self.spinner3.wait = 0
+                self.spinner3.direction = 1
+                self.spinner3.active = True
 
-            self.spinner3.color_indx = color.COLOR_INDX_RED
-            self.spinner3.pos = 0
-            self.spinner3.wait = 0
-            self.spinner3.direction = 1
-            self.spinner3.active = True
+            elif self.mode == data.MODE_ALARM:
+                self.spinner0.color_indx = color.COLOR_INDX_RED
+                self.spinner0.pos = 6
+                self.spinner0.wait = 0
+                self.spinner0.active = True
 
-        elif self.mode == data.MODE_ALARM:
-            self.spinner0.color_indx = color.COLOR_INDX_RED
-            self.spinner0.pos = 6
-            self.spinner0.wait = 0
-            self.spinner0.active = True
+                self.spinner1.color_indx = color.COLOR_INDX_RED
+                self.spinner1.pos = 7
+                self.spinner1.wait = 0
+                self.spinner1.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_RED
-            self.spinner1.pos = 7
-            self.spinner1.wait = 0
-            self.spinner1.active = True
+                self.spinner2.color_indx = color.COLOR_INDX_RED
+                self.spinner2.pos = 6
+                self.spinner2.wait = 0
+                self.spinner2.direction = -1
+                self.spinner2.active = True
 
-            self.spinner2.color_indx = color.COLOR_INDX_RED
-            self.spinner2.pos = 6
-            self.spinner2.wait = 0
-            self.spinner2.direction = -1
-            self.spinner2.active = True
+                self.spinner3.color_indx = color.COLOR_INDX_RED
+                self.spinner3.pos = 7
+                self.spinner3.wait = 0
+                self.spinner3.direction = -1
+                self.spinner3.active = True
 
-            self.spinner3.color_indx = color.COLOR_INDX_RED
-            self.spinner3.pos = 7
-            self.spinner3.wait = 0
-            self.spinner3.direction = -1
-            self.spinner3.active = True
+            elif self.mode == data.MODE_SENDING:
+                self.spinner0.color_indx = color.COLOR_INDX_BLUE
+                self.spinner0.pos = 6
+                self.spinner0.active = True
 
-        elif self.mode == data.MODE_SENDING:
-            self.spinner0.color_indx = color.COLOR_INDX_BLUE
-            self.spinner0.pos = 6
-            self.spinner0.active = True
+                self.spinner1.color_indx = color.COLOR_INDX_BLUE
+                self.spinner1.pos = 8
+                self.spinner1.active = True
 
-            self.spinner1.color_indx = color.COLOR_INDX_BLUE
-            self.spinner1.pos = 8
-            self.spinner1.active = True
+                self.spinner2.color_indx = color.COLOR_INDX_BLUE
+                self.spinner2.pos = 10
+                self.spinner2.active = True
 
-            self.spinner2.color_indx = color.COLOR_INDX_BLUE
-            self.spinner2.pos = 10
-            self.spinner2.active = True
-
-            self.spinner3.color_indx = color.COLOR_INDX_BLUE
-            self.spinner3.pos = 12
-            self.spinner3.active = True
+                self.spinner3.color_indx = color.COLOR_INDX_BLUE
+                self.spinner3.pos = 12
+                self.spinner3.active = True
 
 clock = Clock24()
             

@@ -9,6 +9,9 @@ MODE_AWAY          = const(3)
 MODE_WARNING       = const(4)
 MODE_ALARM         = const(5)
 MODE_SENDING       = const(6)
+MODE_SET_TIME      = const(7)
+MODE_12_00         = const(8)
+
 
 mode = {'index': MODE_START, 'changed':True}
 date_time = time.struct_time((2024, 03, 28, 12, 0, 0, 6, -1, -1))

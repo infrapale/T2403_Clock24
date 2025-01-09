@@ -28,6 +28,7 @@ from uart_com import UartCom
 from clock24 import clock
 from rtc_pcf8563 import rtc
 import data
+from audio_msg import wav_msg
     
     
     
@@ -60,17 +61,22 @@ def cb_set_time():
     # print('dt=',dt)
     dt = time.struct_time((dt[0],dt[1],dt[2],dt[3],dt[4],0, 3, -1, -1))
     rtc.set_time(dt)
+    wav_msg.new_event(data.MODE_SET_TIME)
 
 def cb_get_time():
     print("cb_get_time")
-    reply_date_time['data'] = rtc.get_time_str()
+    reply_date_time['data'] = rtc.get_date_time_str()
     ucom.send_dict_msg(reply_date_time)
     
 def cb_set_mode():
     global cmd_last
     print("cb_set_mode:", cmd_last)
-    m = int(cmd_last['data'])
-    clock.set_mode(m)
+    try:
+        m = int(cmd_last['data'])
+        clock.set_mode(m)
+        wav_msg.new_event(m)
+    except:
+        print("incorrect cmd_last: ",cmd_last['data'])
 
 def cb_get_mode():
     global replies
